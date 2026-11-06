@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurora Fashion | Virtual Try-On Demo</title>
+  <link rel="stylesheet" href="/widget/widget.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fafafa;
+      color: #111827;
+    }
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      color: white;
+      padding: 60px 32px;
+      text-align: center;
+    }
+    .hero h1 {
+      margin: 0 0 12px 0;
+      font-size: 2.5rem;
+      font-weight: 800;
+    }
+    .hero p {
+      max-width: 680px;
+      margin: 0 auto 24px auto;
+      font-size: 1.1rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+    .badge-bar {
+      display: inline-flex;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      gap: 16px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+    }
+    .product-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 20px -5px rgba(0,0,0,0.1);
+    }
+    .product-image-wrap {
+      height: 320px;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+    }
+    .product-image-wrap img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+    .product-info {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .product-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin: 0 0 6px 0;
+    }
+    .product-price {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #4f46e5;
+      margin-bottom: 16px;
+    }
+    .btn-group {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+    }
+    .btn-tryon {
+      flex: 1;
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .btn-tryon:hover {
+      background: #4f46e5;
+    }
+    .btn-cart {
+      background: #f3f4f6;
+      color: #374151;
+      border: 1px solid #d1d5db;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .feature-card {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 40px;
+      line-height: 1.6;
+    }
+    .feature-card h4 {
+      margin: 0 0 8px 0;
+      color: #1e40af;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <span>✨</span> AURORA COUTURE
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span style="font-size: 0.85rem; color: #10b981; font-weight: 600;">● Try-On API Active</span>
+      <a href="/docs" target="_blank" style="color: #4f46e5; text-decoration: none; font-weight: 600; font-size: 0.9rem;">API Documentation →</a>
+    </div>
+  </header>
+
+  <div class="hero">
+    <h1>Next-Gen Virtual Try-On for E-Commerce</h1>
+    <p>
+      Seamlessly try on any garment from our store. Upload your photo wearing anything—including knee-length <strong>Kurtas, tunics, or dresses</strong>—and our AI will remove the long garment, inpaint the lower wear, and fit your selected shirt with realistic fabric drape.
+    </p>
+    <div class="badge-bar">
+      <span>⚡ Leffa & IDM-VTON Diffusion</span>
+      <span>•</span>
+      <span>✂️ Grounded-SAM 2 Garment Parsing</span>
+      <span>•</span>
+      <span>👖 Automatic Lower-Body Delta Inpainting</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section-title">
+      <span>Featured Products</span>
+      <span style="font-size: 0.9rem; font-weight: 400; color: #6b7280;">Click "✨ Try On Me" on any item</span>
+    </div>
+
+    <div class="catalog-grid">
+      <!-- Product 1 -->
+      <div class="product-card">
+        <div class="product-image-wrap">
+          <canvas id="p1-canvas" width="300" height="300"></canvas>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Crisp White Oxford Shirt</h3>
+          <div class="product-price">$58.00</div>
+          <div class="btn-group">
+            <button class="btn-tryon" onclick="tryProduct('p1-canvas', 'upper_body')">
+              ✨ Try On Me
+            </button>
+            <button class="btn-cart">Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card">
+        <div class="product-image-wrap">
+          <canvas id="p2-canvas" width="300" height="300"></canvas>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Indigo Denim Chambray Shirt</h3>
+          <div class="product-price">$72.00</div>
+          <div class="btn-group">
+            <button class="btn-tryon" onclick="tryProduct('p2-canvas', 'upper_body')">
+              ✨ Try On Me
+            </button>
+            <button class="btn-cart">Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card">
+        <div class="product-image-wrap">
+          <canvas id="p3-canvas" width="300" height="300"></canvas>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Forest Green Linen Camp Shirt</h3>
+          <div class="product-price">$64.00</div>
+          <div class="btn-group">
+            <button class="btn-tryon" onclick="tryProduct('p3-canvas', 'upper_body')">
+              ✨ Try On Me
+            </button>
+            <button class="btn-cart">Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card">
+        <div class="product-image-wrap">
+          <canvas id="p4-canvas" width="300" height="300"></canvas>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Midnight Silk Embroidered Kurta</h3>
+          <div class="product-price">$98.00</div>
+          <div class="btn-group">
+            <button class="btn-tryon" onclick="tryProduct('p4-canvas', 'dress')">
+              ✨ Try On Me
+            </button>
+            <button class="btn-cart">Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature Architecture Box -->
+    <div class="feature-card">
+      <h4>🔍 The Kurta-to-Shirt Cross-Category Algorithm in Action:</h4>
+      <p style="margin: 0;">
+        When shoppers upload a photo wearing a <strong>Kurta</strong> (which reaches to the knees) and select a <strong>Shirt</strong> (which ends at the waist), the platform activates Stage 2 Delta Processing. Instead of leaving ghost flaps hanging over the knees, the system segments the full kurta with Grounded-SAM 2, removes the region below the waist, reconstructs the trousers using LaMa inpainting, and hands a clean agnostic canvas to the Leffa diffusion engine.
+      </p>
+    </div>
+  </div>
+
+  <!-- Storefront Try-On Widget SDK -->
+  <script src="/widget/embed.js"></script>
+
+  <script>
+    // Draw synthetic high-definition garment graphics onto canvases for instant standalone demo
+    function renderGarmentIcons() {
+      // 1. White Oxford Shirt
+      const c1 = document.getElementById('p1-canvas').getContext('2d');
+      c1.fillStyle = "#ffffff";
+      c1.fillRect(0, 0, 300, 300);
+      c1.fillStyle = "#f8fafc";
+      c1.strokeStyle = "#cbd5e1";
+      c1.lineWidth = 4;
+      c1.beginPath();
+      c1.moveTo(100, 50); c1.lineTo(200, 50); c1.lineTo(240, 90); c1.lineTo(210, 110);
+      c1.lineTo(190, 80); c1.lineTo(190, 240); c1.lineTo(110, 240); c1.lineTo(110, 80);
+      c1.lineTo(90, 110); c1.lineTo(60, 90); c1.closePath();
+      c1.fill(); c1.stroke();
+      // Collar
+      c1.fillStyle = "#e2e8f0";
+      c1.beginPath();
+      c1.moveTo(120, 50); c1.lineTo(150, 90); c1.lineTo(180, 50); c1.closePath();
+      c1.fill();
+
+      // 2. Indigo Chambray Shirt
+      const c2 = document.getElementById('p2-canvas').getContext('2d');
+      c2.fillStyle = "#ffffff";
+      c2.fillRect(0, 0, 300, 300);
+      c2.fillStyle = "#1e3a8a"; // Dark blue denim
+      c2.beginPath();
+      c2.moveTo(100, 50); c2.lineTo(200, 50); c2.lineTo(240, 90); c2.lineTo(210, 110);
+      c2.lineTo(190, 80); c2.lineTo(190, 240); c2.lineTo(110, 240); c2.lineTo(110, 80);
+      c2.lineTo(90, 110); c2.lineTo(60, 90); c2.closePath();
+      c2.fill();
+
+      // 3. Forest Green Camp Shirt
+      const c3 = document.getElementById('p3-canvas').getContext('2d');
+      c3.fillStyle = "#ffffff";
+      c3.fillRect(0, 0, 300, 300);
+      c3.fillStyle = "#14532d"; // Forest green
+      c3.beginPath();
+      c3.moveTo(100, 50); c3.lineTo(200, 50); c3.lineTo(240, 90); c3.lineTo(210, 110);
+      c3.lineTo(190, 80); c3.lineTo(190, 240); c3.lineTo(110, 240); c3.lineTo(110, 80);
+      c3.lineTo(90, 110); c3.lineTo(60, 90); c3.closePath();
+      c3.fill();
+
+      // 4. Midnight Silk Kurta (Long)
+      const c4 = document.getElementById('p4-canvas').getContext('2d');
+      c4.fillStyle = "#ffffff";
+      c4.fillRect(0, 0, 300, 300);
+      c4.fillStyle = "#312e81"; // Deep Indigo Silk
+      c4.beginPath();
+      c4.moveTo(110, 40); c4.lineTo(190, 40); c4.lineTo(230, 80); c4.lineTo(210, 100);
+      c4.lineTo(190, 80); c4.lineTo(200, 280); c4.lineTo(100, 280); c4.lineTo(110, 80);
+      c4.lineTo(90, 100); c4.lineTo(70, 80); c4.closePath();
+      c4.fill();
+    }
+    window.addEventListener('DOMContentLoaded', renderGarmentIcons);
+
+    function tryProduct(canvasId, category) {
+      const canvas = document.getElementById(canvasId);
+      const garmentDataUrl = canvas.toDataURL('image/png');
+      
+      window.VirtualTryOn.open({
+        garmentUrl: garmentDataUrl,
+        garmentCategory: category,
+        storeId: "store_aurora_fashion"
+      });
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,25 @@
+# Python virtual environment
+venv/
+env/
+.env
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Model Checkpoints (downloaded dynamically in Colab/Docker)
+engine/weights/*/
+!engine/weights/download_models.py
+
+# Customer upload files & generated renders
+storage_uploads/renders/*
+storage_uploads/uploads/*
+!storage_uploads/.gitkeep
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

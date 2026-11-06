@@ -1,0 +1,48 @@
+# Virtual Try-On API Platform Dependencies
+
+# API & Web Framework
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+pydantic>=2.7.0
+pydantic-settings>=2.2.0
+python-multipart>=0.0.9
+requests>=2.31.0
+httpx>=0.27.0
+sse-starlette>=2.1.0
+
+# Task Queue & Async Orchestration
+celery>=5.4.0
+redis>=5.0.3
+
+# Deep Learning & Vision Core
+torch>=2.2.0
+torchvision>=0.17.0
+torchaudio>=2.2.0
+accelerate>=0.29.0
+diffusers>=0.28.0
+transformers>=4.40.0
+huggingface-hub>=0.22.0
+
+# Computer Vision, Image Processing & Geometry
+opencv-python-headless>=4.9.0.80
+pillow>=10.3.0
+numpy>=1.26.0
+scipy>=1.13.0
+einops>=0.7.0
+
+# Inpainting & Segmentation Model Libraries
+# pip install git+https://github.com/facebookresearch/segment-anything-2.git
+# pip install git+https://github.com/IDEA-Research/GroundingDINO.git
+# pip install git+https://github.com/advimman/lama.git
+# pip install git+https://github.com/franciszzj/Leffa.git
+
+# Cloud Storage
+boto3>=1.34.0
+botocore>=1.34.0
+
+# Testing & Utilities
+pytest>=8.1.0
+pytest-asyncio>=0.23.0
+python-dotenv>=1.0.1
+tqdm>=4.66.0
+

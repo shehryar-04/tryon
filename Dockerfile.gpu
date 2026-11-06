@@ -1,0 +1,44 @@
+FROM nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_DEFAULT_TIMEOUT=120 \
+    PIP_RETRIES=5
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.10 \
+    python3-pip \
+    python3.10-dev \
+    git \
+    wget \
+    curl \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    libgl1 \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip
+RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
+
+WORKDIR /app
+
+# Copy and install Python requirements with CUDA 12.1 PyTorch in a single unified step
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir \
+    --default-timeout 120 \
+    --retries 5 \
+    --extra-index-url https://download.pytorch.org/whl/cu121 \
+    -r requirements.txt
+
+# Copy source code
+COPY . /app
+
+# Expose FastAPI port
+EXPOSE 8000
+
+# Default command starts FastAPI
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
